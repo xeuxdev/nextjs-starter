@@ -2,7 +2,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+Clone this repository or use it as a template:
+
+```bash
+npx create-next-app --example https://github.com/Headbwoi/nextjs-starter
+# or
+yarn create next-app --example https://github.com/Headbwoi/nextjs-starter
+```
+
+To, run the development server:
 
 ```bash
 npm run dev
