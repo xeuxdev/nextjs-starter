@@ -46,7 +46,7 @@ const Textarea: React.FC<TextareaProps> = ({
         ref={ref}
         {...props}
       />
-      <span className="absolute right-1 -top-6">
+      <span className="absolute right-1 -top-6 text-xs">
         {charLength} / {maxLength}
       </span>
     </div>
