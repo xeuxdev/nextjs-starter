@@ -113,3 +113,19 @@ export function returnRandomItem(item: string[]) {
   const randomIndex = Math.floor(Math.random() * item.length);
   return item[randomIndex];
 }
+
+export const formatAmount = (amount: number, shortFrom?: boolean) => {
+  const currency = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "NGN",
+  });
+  const res = currency.format(amount);
+
+  if (shortFrom) {
+    return res;
+  } else {
+    const formattedCurrency = res.replace("NGN", "₦");
+
+    return formattedCurrency;
+  }
+};
