@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -8,10 +10,13 @@ export interface TextareaProps
 const Textarea: React.FC<TextareaProps> = ({
   className,
   maxLength,
+  defaultValue,
   ...props
 }) => {
-  const [charLength, setCharLength] = React.useState(0);
-  const ref = React.useRef<HTMLTextAreaElement>({} as HTMLTextAreaElement);
+  const [charLength, setCharLength] = React.useState(
+    defaultValue?.toString()?.length || 0
+  );
+  const ref = React.useRef<HTMLTextAreaElement>(null);
 
   React.useEffect(() => {
     function autoResize() {
@@ -22,10 +27,10 @@ const Textarea: React.FC<TextareaProps> = ({
     }
 
     autoResize();
-    window.addEventListener("DOMContentLoaded", autoResize);
+    window.addEventListener("resize", autoResize);
 
     return () => {
-      window.removeEventListener("DOMContentLoaded", autoResize);
+      window.removeEventListener("resize", autoResize);
     };
   }, [charLength]);
 
@@ -33,6 +38,13 @@ const Textarea: React.FC<TextareaProps> = ({
     const valueLength = event.target.value.length;
     setCharLength(valueLength);
   };
+
+  React.useEffect(() => {
+    if (ref.current) {
+      const valueLength = ref.current.value.length;
+      setCharLength(valueLength);
+    }
+  }, [defaultValue]);
 
   return (
     <div className="relative">
@@ -42,11 +54,12 @@ const Textarea: React.FC<TextareaProps> = ({
           className
         )}
         maxLength={maxLength}
+        defaultValue={defaultValue}
         onInput={handleInput}
         ref={ref}
         {...props}
       />
-      <span className="absolute right-1 -top-6 text-xs">
+      <span className="absolute right-1 -top-6">
         {charLength} / {maxLength}
       </span>
     </div>
